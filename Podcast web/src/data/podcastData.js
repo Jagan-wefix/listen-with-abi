@@ -1,0 +1,79 @@
+export const podcastInfo = {
+  title: "Listen with Abi Podcast",
+  description: "Exploring the latest in technology, innovation, and digital transformation",
+  host: "Alex Johnson",
+  email: "contact@techtalkpod.com",
+  totalEpisodes: 156,
+  totalDownloads: "2.3M",
+  avgListeners: "45K",
+  rating: 4.8
+};
+
+export const episodes = [
+  {
+    id: 1,
+    title: "The Future of Artificial Intelligence",
+    description: "Deep dive into AI trends, machine learning breakthroughs, and what the future holds for artificial intelligence in our daily lives.",
+    date: "2024-01-15",
+    duration: "42:30",
+    audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
+    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    plays: "12.5K",
+    featured: true
+  },
+  {
+    id: 2,
+    title: "Blockchain Revolution: Beyond Cryptocurrency",
+    description: "Exploring blockchain applications beyond Bitcoin, including smart contracts, DeFi, and enterprise solutions.",
+    date: "2024-01-08",
+    duration: "38:45",
+    audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
+    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    plays: "10.2K",
+    featured: false
+  },
+  {
+    id: 3,
+    title: "Sustainable Tech: Green Computing Solutions",
+    description: "How technology companies are reducing their carbon footprint and developing eco-friendly computing solutions.",
+    date: "2024-01-01",
+    duration: "35:20",
+    audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
+    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    plays: "8.7K",
+    featured: false
+  },
+  {
+    id: 4,
+    title: "Cybersecurity in the Modern Age",
+    description: "Latest cybersecurity threats, protection strategies, and the evolving landscape of digital security.",
+    date: "2023-12-25",
+    duration: "44:15",
+    audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
+    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    plays: "15.3K",
+    featured: false
+  },
+  {
+    id: 5,
+    title: "The Rise of Remote Work Technologies",
+    description: "Tools, platforms, and technologies that are shaping the future of remote work and distributed teams.",
+    date: "2023-12-18",
+    duration: "39:50",
+    audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
+    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    plays: "9.8K",
+    featured: false
+  },
+  {
+    id: 6,
+    title: "Quantum Computing Explained",
+    description: "Breaking down quantum computing concepts, current developments, and potential real-world applications.",
+    date: "2023-12-11",
+    duration: "41:30",
+    audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
+    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    plays: "11.2K",
+    featured: false
+  }
+];
