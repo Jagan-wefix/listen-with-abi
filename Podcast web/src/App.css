@@ -1,7 +1,7 @@
 /* Global Styles */
 :root {
-  --primary-blue: #3B82F6;
-  --secondary-blue: #1E40AF;
+  --primary-blue:#F15A29;
+  --secondary-blue: #1E254F;
   --accent-orange: #F97316;
   --success-green: #10B981;
   --warning-yellow: #F59E0B;
@@ -20,7 +20,7 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  background: linear-gradient(135deg, #eba74f 0%, #F15A29 100%);
+  background: var(--dark-bg);
   min-height: 100vh;
   padding-bottom: 120px;
 }
@@ -138,26 +138,13 @@ body {
 
 .hero-play-btn {
   background: var(--primary-blue);
-  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .hero-play-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.582);
   background: var(--secondary-blue);
-}
-
-.hero-subscribe-btn {
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.3) !important;
-  color: white;
-  backdrop-filter: blur(10px);
-}
-
-.hero-subscribe-btn:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(255, 255, 255, 0.5) !important;
-  transform: translateY(-3px);
 }
 
 .hero-image {

@@ -95,7 +95,7 @@ const Homepage = ({ audioPlayer }) => {
                 <Card.Body className="text-center">
                   <Download size={40} className="stat-icon" />
                   <h3>{podcastInfo.totalDownloads}</h3>
-                  <p>Total Downloads</p>
+                  <p>Followers</p>
                 </Card.Body>
               </Card>
             </Col>
@@ -127,7 +127,7 @@ const Homepage = ({ audioPlayer }) => {
           <Row>
             <Col>
               <h2 className="section-title">Latest Episodes</h2>
-              <p className="section-subtitle">Catch up on our most recent discussions</p>
+              <p className="section-subtitle">Catch up on our most recent Episode</p>
             </Col>
           </Row>
           <Row>
@@ -161,7 +161,7 @@ const Homepage = ({ audioPlayer }) => {
             <Col lg={8} className="mx-auto">
               <div className="spotify-embed-container">
                 <iframe 
-                  src="https://open.spotify.com/embed/show/4rOoJ6Egrf8K2IrywzwOMk" 
+                  src="https://open.spotify.com/embed/episode/5NkwPvAZG8j9hX8A97rxWv?utm_source=generator" 
                   width="100%" 
                   height="352" 
                   frameBorder="0" 

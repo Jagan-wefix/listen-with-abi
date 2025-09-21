@@ -12,11 +12,11 @@ export const podcastInfo = {
 export const episodes = [
   {
     id: 1,
-    title: "The Future of Artificial Intelligence",
+    title: "",
     description: "Deep dive into AI trends, machine learning breakthroughs, and what the future holds for artificial intelligence in our daily lives.",
     date: "2024-01-15",
     duration: "42:30",
-    audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
+    audioUrl: "https://open.spotify.com/embed/episode/2Bw4bgQG0byCkCifBK20I0?utm_source=generator&theme=0",
     thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
     plays: "12.5K",
     featured: true
@@ -65,15 +65,4 @@ export const episodes = [
     plays: "9.8K",
     featured: false
   },
-  {
-    id: 6,
-    title: "Quantum Computing Explained",
-    description: "Breaking down quantum computing concepts, current developments, and potential real-world applications.",
-    date: "2023-12-11",
-    duration: "41:30",
-    audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
-    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
-    plays: "11.2K",
-    featured: false
-  }
 ];
