@@ -1,24 +1,28 @@
+const cover = "https://res.cloudinary.com/dkyvctkhf/image/upload/v1761031385/listen_with_abi_cover_jryip1.jpg";
+
 export const podcastInfo = {
   title: "Listen with Abi Podcast",
-  description: "Exploring the latest in technology, innovation, and digital transformation",
-  host: "Alex Johnson",
-  email: "contact@techtalkpod.com",
+  description: "Let's talk about the Real stuff",
+  host: "ABI",
+  email: "adidevpriya@gmail.com",
+  instaID: "https://www.instagram.com",
   totalEpisodes: 156,
   totalDownloads: "2.3M",
   avgListeners: "45K",
-  rating: 4.8
+  cover: cover,
+  thumbnail: cover,
 };
 
 export const episodes = [
   {
     id: 1,
-    title: "",
+    title: "The Future of AI",
     description: "Deep dive into AI trends, machine learning breakthroughs, and what the future holds for artificial intelligence in our daily lives.",
     date: "2024-01-15",
     duration: "42:30",
-    audioUrl: "https://open.spotify.com/embed/episode/2Bw4bgQG0byCkCifBK20I0?utm_source=generator&theme=0",
-    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    audioUrl: "https://open.spotify.com/embed/episode/2Bw4bgQG0byCkCifBK20I0?utm_source=generator&theme=",
     plays: "12.5K",
+    thumbnail: cover,
     featured: true
   },
   {
@@ -28,7 +32,7 @@ export const episodes = [
     date: "2024-01-08",
     duration: "38:45",
     audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
-    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    thumbnail: cover,
     plays: "10.2K",
     featured: false
   },
@@ -39,7 +43,7 @@ export const episodes = [
     date: "2024-01-01",
     duration: "35:20",
     audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
-    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    thumbnail: cover,
     plays: "8.7K",
     featured: false
   },
@@ -50,7 +54,7 @@ export const episodes = [
     date: "2023-12-25",
     duration: "44:15",
     audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
-    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    thumbnail: cover,
     plays: "15.3K",
     featured: false
   },
@@ -61,8 +65,8 @@ export const episodes = [
     date: "2023-12-18",
     duration: "39:50",
     audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
-    thumbnail: "https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb",
+    thumbnail: cover,
     plays: "9.8K",
     featured: false
-  },
+  }
 ];

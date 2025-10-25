@@ -1,6 +1,6 @@
 /* Global Styles */
 :root {
-  --primary-blue:#F15A29;
+  --primary-blue:#C68642;
   --secondary-blue: #1E254F;
   --accent-orange: #F97316;
   --success-green: #10B981;
@@ -71,7 +71,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-  background: linear-gradient(135deg, #eba74f 0%, #F15A29 100%);
+  background: linear-gradient(135deg, #eba74f 0%, #C68642 100%);
   color: white;
   position: relative;
   overflow: hidden;
