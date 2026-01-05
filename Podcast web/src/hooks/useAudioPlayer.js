@@ -10,6 +10,38 @@ export const useAudioPlayer = () => {
   const [error, setError] = useState(null);
   const [currentEpisode, setCurrentEpisode] = useState(null);
 
+  const [showCommentBoxes, setShowCommentBoxes] = useState({})
+
+  // per-episode interactions (likes/comments) persisted in localStorage
+  const storageKey = 'lwa_player_interactions_v1'
+  const [interactions, setInteractions] = useState(() => {
+    try {
+      const raw = localStorage.getItem(storageKey)
+      return raw ? JSON.parse(raw) : {}
+    } catch (e) { return {} }
+  })
+
+  const saveInteractions = (next) => {
+    setInteractions(next)
+    try { localStorage.setItem(storageKey, JSON.stringify(next)) } catch (e) {}
+  }
+
+  const toggleLike = (episodeId) => {
+    const current = interactions[episodeId] || { liked: false, likes: 0, comments: [] }
+    const liked = !current.liked
+    const likes = liked ? (current.likes || 0) + 1 : Math.max(0, (current.likes || 1) - 1)
+    const next = { ...interactions, [episodeId]: { ...current, liked, likes, comments: current.comments || [] } }
+    saveInteractions(next)
+  }
+
+  const addComment = (episodeId, text) => {
+    if (!text || !text.trim()) return
+    const current = interactions[episodeId] || { liked: false, likes: 0, comments: [] }
+    const comment = { text: text.trim(), createdAt: new Date().toISOString() }
+    const next = { ...interactions, [episodeId]: { ...current, comments: [comment, ...(current.comments || [])], liked: current.liked, likes: current.likes || 0 } }
+    saveInteractions(next)
+  }
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -44,27 +76,38 @@ export const useAudioPlayer = () => {
   }, [currentEpisode]);
 
   const play = (episode = null) => {
-    if (episode && episode !== currentEpisode) {
+    if (!episode || !episode.audioUrl) return;
+    if (episode !== currentEpisode) {
       setCurrentEpisode(episode);
-      audioRef.current.src = episode.audioUrl;
+      if (audioRef.current) {
+        audioRef.current.src = episode.audioUrl;
+      }
     }
-    audioRef.current.play();
-    setIsPlaying(true);
+    if (audioRef.current) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
   };
 
   const pause = () => {
-    audioRef.current.pause();
-    setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
   };
 
   const seek = (time) => {
-    audioRef.current.currentTime = time;
-    setCurrentTime(time);
+    if (audioRef.current) {
+      audioRef.current.currentTime = time;
+      setCurrentTime(time);
+    }
   };
 
   const setVolumeLevel = (level) => {
     const clampedLevel = Math.max(0, Math.min(1, level));
-    audioRef.current.volume = clampedLevel;
+    if (audioRef.current) {
+      audioRef.current.volume = clampedLevel;
+    }
     setVolume(clampedLevel);
   };
 
@@ -89,5 +132,10 @@ export const useAudioPlayer = () => {
     seek,
     setVolumeLevel,
     formatTime,
+    showCommentBoxes,
+    setShowCommentBoxes,
+    interactions,
+    toggleLike,
+    addComment,
   };
 };

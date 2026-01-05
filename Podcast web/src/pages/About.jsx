@@ -1,5 +1,6 @@
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { Mail, AtSign, Award, Calendar, Users, Download, Instagram } from 'lucide-react';
+import { Mail, Award, Calendar, Users, Download, Instagram } from 'lucide-react';
+import { Link } from 'react-router-dom'
 import { podcastInfo } from '../data/podcastData';
 
 const About = () => {
@@ -8,18 +9,10 @@ const About = () => {
       <Container>
         {/* Hero Section */}
         <Row className="about-hero">
-          <Col lg={6}>
-            <div className="host-image-container">
-              <img 
-                src="sdfgh"
-                className="host-image"
-              />
-            </div>
-          </Col>
-          <Col lg={6}>
+          <Col lg={12}>
             <div className="about-content">
               <h1 className="about-title">About Listen with Abi — Self Improvement Podcast</h1>
-              <p className="about-description">
+              <p className="about-description" style={{color: 'black'}}>
                 Listen with Abi is a self‑improvement podcast dedicated to helping you build better habits,
                 find clarity, and grow into your best self. Each episode delivers practical strategies,
                 real stories, and simple daily practices you can apply right away. Hosted by {podcastInfo.host},
@@ -28,8 +21,8 @@ const About = () => {
               
               <div className="host-info">
                 <h3>Meet Your Host</h3>
-                <h4>{podcastInfo.host}</h4>
-                <p>
+                <h4 >{podcastInfo.host}</h4>
+                <p style={{color: 'black'}}>
                   Abi is a lifelong learner focused on personal growth, resilience, and mindful living.
                   With experience guiding individuals through habit change, career transitions, and wellbeing practices,
                   Abi brings warm, actionable conversations that motivate and empower listeners to take the next step.
@@ -38,15 +31,11 @@ const About = () => {
                 <div className="contact-info">
                   <div className="contact-item">
                     <Mail size={18} />
-                    <span>{podcastInfo.email}</span>
-                  </div>
-                  <div className="contact-item">
-                    <AtSign size={18} />
-                    <span>{podcastInfo.twitter}</span>
+                    <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${podcastInfo.email}`} target="_blank" rel="noopener noreferrer">{podcastInfo.email}</a>
                   </div>
                   <div className="contact-item">
                     <Instagram size={18} />
-                    <span>{podcastInfo.instaID}</span>
+                    <a href={podcastInfo.instaID} target="_blank" rel="noopener noreferrer">{podcastInfo.instaID}</a>
                   </div>
                 </div>
               </div>
@@ -60,7 +49,7 @@ const About = () => {
             <Card className="mission-card">
               <Card.Body>
                 <h2 className="section-title text-center">Our Mission</h2>
-                <p className="mission-text">
+                <p className="mission-text" style={{color: 'black'}}>
                   Our mission is to make sustainable personal growth accessible. We translate research-backed
                   tools into short, practical episodes that help you improve focus, boost wellbeing, and
                   create routines that last — without overwhelm.
@@ -76,7 +65,7 @@ const About = () => {
                     </ul>
                   </Col>
                   <Col md={6}>
-                    <h4>What Makes Us Different</h4>
+                    <h4 >What Makes Us Different</h4>
                     <ul className="topics-list">
                       <li>Actionable, bite‑sized practices</li>
                       <li>Evidence‑based tools explained simply</li>
@@ -89,54 +78,9 @@ const About = () => {
           </Col>
         </Row>
 
-        {/* Statistics & Achievements */}
-        <Row className="achievements-section">
-          <Col>
-            <h2 className="section-title text-center">Podcast Statistics</h2>
-            <p className="section-subtitle text-center">
-              Progress measured in impact and community growth
-            </p>
-          </Col>
-        </Row>
-        
-        <Row>
-          <Col lg={3} md={6} className="mb-4">
-            <Card className="achievement-card">
-              <Card.Body className="text-center">
-                <Calendar size={40} className="achievement-icon" />
-                <h3>3+ Years</h3>
-                <p>Sharing practical growth tools</p>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3} md={6} className="mb-4">
-            <Card className="achievement-card">
-              <Card.Body className="text-center">
-                <Download size={40} className="achievement-icon" />
-                <h3>{podcastInfo.totalDownloads}</h3>
-                <p>Total Downloads</p>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3} md={6} className="mb-4">
-            <Card className="achievement-card">
-              <Card.Body className="text-center">
-                <Users size={40} className="achievement-icon" />
-                <h3>{podcastInfo.avgListeners}</h3>
-                <p>Average Listeners</p>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3} md={6} className="mb-4">
-            <Card className="achievement-card">
-              <Card.Body className="text-center">
-                <Award size={40} className="achievement-icon" />
-                <h3>{podcastInfo.rating}/5</h3>
-                <p>Average Rating</p>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>   
+        <footer className="about-footer mt-5 text-center">
+          <Link to="/admin" className="admin-link" style={{color: '#0F172A'}}>Admin</Link>
+        </footer>
       </Container>
     </div>
   );

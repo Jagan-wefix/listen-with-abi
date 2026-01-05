@@ -1,22 +1,106 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { Play, Pause, Download, Users, Star, TrendingUp } from 'lucide-react';
-import { episodes, podcastInfo } from '../data/podcastData';
+import { Link, useNavigate } from 'react-router-dom';
+import { podcastInfo, fetchEpisodes } from '../data/podcastData';
 import EpisodeCard from '../components/EpisodeCard';
+import SpotifyEpisodes from '../components/SpotifyEpisodes';
 
 const Homepage = ({ audioPlayer }) => {
   const { isPlaying, currentEpisode, play, pause, loading } = audioPlayer;
+  const [episodes, setEpisodes] = useState([]);
+  const [loadingEpisodes, setLoadingEpisodes] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
+
   const featuredEpisode = episodes.find(ep => ep.featured) || episodes[0];
   const latestEpisodes = episodes.slice(0, 3);
+  // We'll fetch Spotify latest for playing directly from homepage
+  const [spotifyLatest, setSpotifyLatest] = useState([]);
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadEpisodes() {
+      try {
+        setFetchError(null);
+        setLoadingEpisodes(true);
+        const items = await fetchEpisodes();
+        if (mounted) setEpisodes(items);
+      } catch (err) {
+        console.error('Failed to load episodes', err);
+        if (mounted) setFetchError(err.message || String(err));
+      } finally {
+        if (mounted) setLoadingEpisodes(false);
+      }
+    }
+    loadEpisodes();
+
+    // fetch spotify latest separately
+    (async () => {
+      try {
+        const s = await import('../components/SpotifyEpisodes').then(m => m.loadSpotifyEpisodes());
+        if (mounted) setSpotifyLatest(s || []);
+      } catch (err) {
+        console.warn('Failed to load spotify latest', err);
+      }
+    })();
+
+    return () => (mounted = false);
+  }, []);
+
+  const retryLoad = async () => {
+    setFetchError(null);
+    setLoadingEpisodes(true);
+    try {
+      const items = await fetchEpisodes();
+      setEpisodes(items);
+    } catch (err) {
+      console.error('Retry failed to load episodes', err);
+      setFetchError(err.message || String(err));
+    } finally {
+      setLoadingEpisodes(false);
+    }
+  };
+
+  const navigate = useNavigate();
 
   const handleHeroPlay = () => {
-    const isCurrentEpisode = currentEpisode?.id === featuredEpisode.id;
+    // Play latest Spotify episode if available, else fall back to featured/web episode
+    const sp = spotifyLatest && spotifyLatest.length > 0 ? spotifyLatest[0] : null;
+    if (sp) {
+      // if we have a direct mp3, play it; otherwise navigate to Spotify Fire page
+      if (sp.mp3Url) {
+        const target = {
+          id: sp.id,
+          title: sp.title,
+          description: sp.description,
+          audioUrl: sp.mp3Url,
+          thumbnail: sp.image || podcastInfo.cover || '',
+        }
+        const isCurrentEpisode = currentEpisode?.id === target?.id;
+        const isCurrentlyPlaying = isCurrentEpisode && isPlaying;
+        if (isCurrentlyPlaying) {
+          pause();
+        } else {
+          play(target);
+        }
+        return;
+      } else {
+        // no direct mp3 available — take user to Spotify page
+        navigate('/spotify-fire');
+        return;
+      }
+    }
+
+    // fallback
+    const target = featuredEpisode;
+    if (!target) return;
+    const isCurrentEpisode = currentEpisode?.id === target?.id;
     const isCurrentlyPlaying = isCurrentEpisode && isPlaying;
-    
+
     if (isCurrentlyPlaying) {
       pause();
     } else {
-      play(featuredEpisode);
+      play(target);
     }
   };
 
@@ -39,109 +123,68 @@ const Homepage = ({ audioPlayer }) => {
                     size="lg" 
                     className="hero-play-btn"
                     onClick={handleHeroPlay}
-                    disabled={loading && currentEpisode?.id === featuredEpisode.id}
+                    disabled={loadingEpisodes || (loading && currentEpisode?.id === featuredEpisode?.id)}
                   >
-                    {loading && currentEpisode?.id === featuredEpisode.id ? (
+                    {loading && currentEpisode?.id === featuredEpisode?.id ? (
                       <div className="loading-spinner-small me-2"></div>
-                    ) : (currentEpisode?.id === featuredEpisode.id && isPlaying) ? (
+                    ) : (currentEpisode?.id === featuredEpisode?.id && isPlaying) ? (
                       <Pause size={20} className="me-2" />
                     ) : (
                       <Play size={20} className="me-2" />
                     )}
-                    {(currentEpisode?.id === featuredEpisode.id && isPlaying) ? 'Pause Latest' : 'Play Latest Episode'}
+                    {(currentEpisode?.id === featuredEpisode?.id && isPlaying) ? 'Pause Latest' : 'Play Latest Episode'}
                   </Button>
 
                 </div>
-              </div>
-            </Col>
-            <Col lg={6}>
-              <div className="hero-image">
-                <img 
-                  src="https://image-cdn-fa.spotifycdn.com/image/ab67656300005f1fc9bd0b9dd1dd191613f7c3fb"
-                  alt="Featured Episode"
-                  className="featured-image"
-                />
-                <div className="hero-stats">
-                  <div className="stat-item">
-                    <span className="stat-number">{podcastInfo.totalEpisodes}+</span>
-                    <span className="stat-label">Episodes</span>
-                  </div>
-                  <div className="stat-item">
-                    <span className="stat-number">{podcastInfo.totalDownloads}</span>
-                    <span className="stat-label">Downloads</span>
-                  </div>
+                <div className="hero-actions mt-3">
+                  <Button as={Link} to="/web-only-episodes" variant="outline-accent" className="ms-3 web-only-btn">Web Only Episodes</Button>
                 </div>
               </div>
-            </Col>
+          </Col>
+          
+          <Col lg={6}>
+            <div className="hero-image">
+              <img 
+                src={podcastInfo.thumbnail}
+                alt="Featured Episode"
+                className="featured-image"
+              />
+            </div>
+          </Col>
           </Row>
         </Container>
       </section>
 
-      {/* Statistics Section */}
-      <section className="stats-section">
-        <Container>
-          <Row>
-            <Col md={3} sm={6} className="mb-4">
-              <Card className="stat-card">
-                <Card.Body className="text-center">
-                  <TrendingUp size={40} className="stat-icon" />
-                  <h3>{podcastInfo.avgListeners}</h3>
-                  <p>Avg. Listeners</p>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={3} sm={6} className="mb-4">
-              <Card className="stat-card">
-                <Card.Body className="text-center">
-                  <Download size={40} className="stat-icon" />
-                  <h3>{podcastInfo.totalDownloads}</h3>
-                  <p>Followers</p>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={3} sm={6} className="mb-4">
-              <Card className="stat-card">
-                <Card.Body className="text-center">
-                  <Users size={40} className="stat-icon" />
-                  <h3>{podcastInfo.totalEpisodes}</h3>
-                  <p>Episodes</p>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={3} sm={6} className="mb-4">
-              <Card className="stat-card">
-                <Card.Body className="text-center">
-                  <Star size={40} className="stat-icon" />
-                  <h3>{podcastInfo.rating}</h3>
-                  <p>Rating</p>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+
 
       {/* Latest Episodes */}
       <section className="latest-episodes">
         <Container>
-          <Row>
+          <Row className="align-items-center mb-3">
             <Col>
               <h2 className="section-title">Latest Episodes</h2>
               <p className="section-subtitle">Catch up on our most recent Episode</p>
             </Col>
+  
           </Row>
+
           <Row>
-            {latestEpisodes.map(episode => (
-              <Col lg={4} md={6} className="mb-4" key={episode.id}>
-                <EpisodeCard 
-                  episode={episode}
-                  isPlaying={isPlaying}
-                  currentEpisode={currentEpisode}
-                  onPlay={play}
-                  loading={loading}
-                />
+            {fetchError ? (
+              <Col>
+                <div className="alert alert-danger d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Failed to load episodes:</strong> {fetchError}
+                  </div>
+                  <div>
+                    <button className="btn btn-sm btn-outline-light" onClick={retryLoad}>Retry</button>
+                  </div>
+                </div>
               </Col>
-            ))}
+            ) : (
+              <Col>
+                <SpotifyEpisodes rssUrl="https://anchor.fm/s/133292dc/podcast/rss" latestCount={3} audioPlayer={audioPlayer} allLink="/spotify-fire" />
+              </Col>
+            )}
           </Row>
         </Container>
       </section>

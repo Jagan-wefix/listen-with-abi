@@ -1,31 +1,42 @@
 import React from 'react';
 import { Card, Badge } from 'react-bootstrap';
-import { Play, Pause, Calendar, Clock, TrendingUp } from 'lucide-react';
+import { Play, Pause, Calendar, Clock } from 'lucide-react';
+import { podcastInfo } from '../data/podcastData';
 
-const EpisodeCard = ({ episode, isPlaying, currentEpisode, onPlay, loading }) => {
+const EpisodeCard = ({ episode, isPlaying, currentEpisode, onPlay, loading, isActive = false }) => {
   const isCurrentEpisode = currentEpisode?.id === episode.id;
-  const isCurrentlyPlaying = isCurrentEpisode && isPlaying;
+  // allow external/embedded players to mark an episode as active via `isActive`
+  const isCurrentlyPlaying = isActive || (isCurrentEpisode && isPlaying);
 
   return (
     <Card className="episode-card h-100">
       <div className="episode-card-image">
-        <img 
-          src={episode.thumbnail} 
-          alt={episode.title}
-          className="card-img-top"
-        />
+        {(() => {
+          const thumb = episode.thumbnail || podcastInfo.cover || '';
+          return (
+            <img
+              src={thumb}
+              alt={episode.title}
+              className="card-img-top"
+            />
+          );
+        })()}
         <div className="play-overlay">
           <button 
             className="play-overlay-btn"
-            onClick={() => onPlay(episode)}
+            onClick={() => {
+              onPlay(episode);
+              try { window.dispatchEvent(new CustomEvent('player:activate', { detail: { episodeId: episode.id } })); } catch (e) {}
+            }}
             disabled={loading && isCurrentEpisode}
+            aria-label={`Play ${episode.title}`}
           >
             {loading && isCurrentEpisode ? (
               <div className="loading-spinner-overlay"></div>
             ) : isCurrentlyPlaying ? (
-              <Pause size={24} />
+              <Pause size={20} />
             ) : (
-              <Play size={24} />
+              <Play size={20} />
             )}
           </button>
         </div>
@@ -37,48 +48,50 @@ const EpisodeCard = ({ episode, isPlaying, currentEpisode, onPlay, loading }) =>
       </div>
       
       <Card.Body className="episode-card-body">
-        <Card.Title className="episode-card-title">{episode.title}</Card.Title>
-        <Card.Text className="episode-description">
-          {episode.description}
-        </Card.Text>
-        
-        <div className="episode-meta">
-          <div className="meta-item">
-            <Calendar size={14} />
-            <span>{new Date(episode.date).toLocaleDateString()}</span>
+        <div className="episode-card-content">
+          <div>
+            <Card.Title className="episode-card-title">{episode.title}</Card.Title>
+            <Card.Text className="episode-description">
+              {episode.description}
+            </Card.Text>
+            <div className="episode-meta">
+              <div className="meta-item">
+                <span>{episode.date ? new Date(episode.date).toLocaleDateString() : ''}</span>
+              </div>
+              <div className="meta-item">
+                <span>{episode.duration}</span>
+              </div>
+            </div>
           </div>
-          <div className="meta-item">
-            <Clock size={14} />
-            <span>{episode.duration}</span>
-          </div>
-          <div className="meta-item">
-            <TrendingUp size={14} />
-            <span>{episode.plays} plays</span>
+
+          <div className="play-button-compact">
+            <button 
+              className="episode-play-btn"
+              onClick={() => {
+                onPlay(episode);
+                try { window.dispatchEvent(new CustomEvent('player:activate', { detail: { episodeId: episode.id } })); } catch (e) {}
+              }}
+              disabled={loading && isCurrentEpisode}
+            >
+              {loading && isCurrentEpisode ? (
+                <>
+                  <div className="loading-spinner-small"></div>
+                  Loading...
+                </>
+              ) : isCurrentlyPlaying ? (
+                <>
+                  <Pause size={16} />
+                  <span className="d-none d-sm-inline"> Pause</span>
+                </>
+              ) : (
+                <>
+                  <Play size={16} />
+                  <span className="d-none d-sm-inline"> Play</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
-
-        <button 
-          className="episode-play-btn"
-          onClick={() => onPlay(episode)}
-          disabled={loading && isCurrentEpisode}
-        >
-          {loading && isCurrentEpisode ? (
-            <>
-              <div className="loading-spinner-small"></div>
-              Loading...
-            </>
-          ) : isCurrentlyPlaying ? (
-            <>
-              <Pause size={16} />
-              Pause
-            </>
-          ) : (
-            <>
-              <Play size={16} />
-              Play Episode
-            </>
-          )}
-        </button>
       </Card.Body>
     </Card>
   );

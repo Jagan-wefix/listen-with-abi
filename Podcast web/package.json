@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "-": "^0.0.1",
     "bootstrap": "^5.3.7",
+    "firebase": "^12.7.0",
     "lucide-react": "^0.540.0",
     "react": "^19.1.1",
     "react-bootstrap": "^2.10.10",

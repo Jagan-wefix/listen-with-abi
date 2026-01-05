@@ -1,15 +1,16 @@
 /* Global Styles */
 :root {
-  --primary-blue:#C68642;
-  --secondary-blue: #1E254F;
-  --accent-orange: #F97316;
-  --success-green: #10B981;
-  --warning-yellow: #F59E0B;
+  --brand-gold: #C68642;
+  --brand-indigo: #1E254F;
+  --cta-orange: #F97316;
+  --status-success: #10B981;
+  --status-warning: #F59E0B;
   --error-red: #EF4444;
   --dark-bg: #0F172A;
   --light-bg: #F8FAFC;
   --text-primary: #1E293B;
-  --text-secondary: #64748B;
+  --text-secondary: #e7eaf0; 
+   /* #64748B; */ 
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
 }
@@ -51,7 +52,7 @@ body {
 
 .brand-custom:hover {
   transform: scale(1.05);
-  color: var(--primary-blue) !important;
+  color: var(--brand-gold) !important;
 }
 
 .nav-link-custom {
@@ -64,14 +65,14 @@ body {
 }
 
 .nav-link-custom:hover {
-  color: var(--primary-blue) !important;
+  color: var(--brand-gold) !important;
   background: rgba(59, 130, 246, 0.1);
   transform: translateY(-2px);
 }
 
 /* Hero Section */
 .hero-section {
-  background: linear-gradient(135deg, #eba74f 0%, #C68642 100%);
+  background: linear-gradient(135deg, #eba74f 0%, var(--brand-gold) 100%);
   color: white;
   position: relative;
   overflow: hidden;
@@ -137,14 +138,79 @@ body {
 }
 
 .hero-play-btn {
-  background: var(--primary-blue);
+  background: var(--brand-gold);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .hero-play-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.582);
-  background: var(--secondary-blue);
+  background: var(--brand-indigo);
+}
+
+.web-only-btn {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+  background: transparent;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+.web-only-btn:hover {
+  background: var(--text-primary);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Semantic button variants */
+.btn-brand {
+  background: var(--brand-gold);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.18s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+.btn-brand:hover { background: var(--brand-indigo); transform: translateY(-3px); }
+
+.btn-outline-brand {
+  background: transparent;
+  border: 1px solid var(--brand-gold);
+  color: var(--brand-gold);
+}
+.btn-outline-brand:hover { background: var(--brand-gold); color: white; }
+
+.btn-accent {
+  background: var(--text-primary);
+  color: white;
+  border: none;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.btn-accent:hover { background: #162233; transform: translateY(-2px); }
+
+.btn-outline-accent {
+  background: transparent;
+  border: 1px solid var(--text-primary);
+  color: var(--text-primary);
+}
+.btn-outline-accent:hover { background: var(--text-primary); color: white; }
+
+.btn-utility {
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  padding: 0.4rem 0.65rem;
+}
+.btn-outline-utility {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-secondary);
 }
 
 .hero-image {
@@ -164,71 +230,7 @@ body {
   transform: scale(1.05);
 }
 
-.hero-stats {
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 2rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 1rem 2rem;
-}
 
-.stat-item {
-  text-align: center;
-}
-
-.stat-number {
-  display: block;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: white;
-}
-
-.stat-label {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-/* Statistics Section */
-.stats-section {
-  padding: 5rem 0;
-  background: rgba(255, 255, 255, 0.95);
-}
-
-.stat-card {
-  background: white;
-  border: none;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  height: 100%;
-}
-
-.stat-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-}
-
-.stat-icon {
-  color: var(--primary-blue);
-  margin-bottom: 1rem;
-}
-
-.stat-card h3 {
-  color: var(--text-primary);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.stat-card p {
-  color: var(--text-secondary);
-  margin: 0;
-}
 
 /* Latest Episodes Section */
 .latest-episodes {
@@ -246,40 +248,48 @@ body {
 
 .section-subtitle {
   font-size: 1.125rem;
-  color: var(--text-secondary);
+  color: #0F172A;
   text-align: center;
   margin-bottom: 3rem;
 }
 
-/* Episode Card Styles */
+/* Episode Card Styles - horizontal compact layout */
 .episode-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
   border: none;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  padding: 0.5rem;
 }
 
 .episode-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.12);
 }
 
 .episode-card-image {
+  flex: 0 0 96px;
+  width: 96px;
+  height: 96px;
   position: relative;
   overflow: hidden;
-  height: 200px;
+  border-radius: 8px;
 }
 
 .episode-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .episode-card:hover .episode-card-image img {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .play-overlay {
@@ -288,12 +298,12 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
 .episode-card:hover .play-overlay {
@@ -301,98 +311,101 @@ body {
 }
 
 .play-overlay-btn {
-  background: var(--primary-blue);
+  background: var(--brand-gold);
   border: none;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  transition: all 0.3s ease;
-}
-
-.play-overlay-btn:hover {
-  transform: scale(1.1);
-  background: var(--secondary-blue);
+  transition: all 0.2s ease;
 }
 
 .featured-badge {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.5rem;
+  right: 0.5rem;
   z-index: 2;
 }
 
 .episode-card-body {
-  padding: 1.5rem;
+  padding: 0.75rem 1rem;
+  flex: 1 1 auto;
+}
+
+.episode-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .episode-card-title {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 1rem;
-  line-height: 1.4;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.2;
 }
 
 .episode-description {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  color:#0F172A;
+  line-height: 1.4;
+  margin: 0 0 0.5rem 0;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  font-size: 0.9rem;
 }
 
 .episode-meta {
   display: flex;
-  flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 0.85rem;
 }
 
 .episode-play-btn {
-  background: var(--primary-blue);
+  background: var(--brand-gold);
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 0.9rem;
   font-weight: 500;
-  transition: all 0.3s ease;
-  display: flex;
+  transition: all 0.2s ease;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  width: 100%;
-  justify-content: center;
 }
 
-.episode-play-btn:hover:not(:disabled) {
-  background: var(--secondary-blue);
-  transform: translateY(-2px);
+.play-button-compact .d-none.d-sm-inline {
+  display: none;
 }
 
-.episode-play-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+@media (max-width: 576px) {
+  .episode-card {
+    gap: 0.75rem;
+    padding: 0.4rem;
+  }
+  .episode-card-image {
+    width: 64px;
+    height: 64px;
+    flex: 0 0 64px;
+  }
+  .episode-description { display: none; }
 }
 
 /* Spotify Section */
 .spotify-section {
-  padding: 5rem 0;
+  padding: 4rem 0;
   background: var(--dark-bg);
   color: white;
+  border-top: 1px solid rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
 }
 
 .spotify-section .section-title {
@@ -401,6 +414,14 @@ body {
 
 .spotify-section .section-subtitle {
   color: rgba(255, 255, 255, 0.8);
+}
+
+/* Web only section uses similar dark backdrop but slightly warmer */
+.web-only-section {
+  /* background: #0F172A; */
+}
+.web-only-section .section-title, .web-only-section .section-subtitle {
+  color: rgba(255,255,255,0.95);
 }
 
 .spotify-embed-container {
@@ -426,6 +447,25 @@ body {
   backdrop-filter: blur(20px);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Expanded player */
+.player-expanded {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.comment-item {
+  padding: .5rem;
+  background: rgba(0,0,0,0.03);
+  border-radius: 6px;
+}
+
+.comments-box {
+  padding: .5rem;
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
 }
 
 .audio-player-card {
@@ -472,8 +512,8 @@ body {
 
 .episode-meta {
   font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin: 0;
+  color: #0F172A;
+  margin:0;
 }
 
 .player-controls {
@@ -484,7 +524,7 @@ body {
 }
 
 .play-pause-btn {
-  background: var(--primary-blue);
+  background: var(--brand-gold);
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -497,7 +537,7 @@ body {
 }
 
 .play-pause-btn:hover:not(:disabled) {
-  background: var(--secondary-blue);
+  background: var(--brand-indigo);
   transform: scale(1.1);
 }
 
@@ -510,7 +550,7 @@ body {
 
 .time-display {
   font-size: 0.75rem;
-  color: var(--text-secondary);
+  color: black;
   min-width: 40px;
   text-align: center;
 }
@@ -533,7 +573,7 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: var(--primary-blue);
+  background: var(--brand-gold);
   transition: width 0.1s ease;
 }
 
@@ -563,8 +603,10 @@ body {
 
 /* Episodes Page */
 .episodes-page {
+  background: #0F172A;
+
   padding: 3rem 0;
-  background: var(--light-bg);
+  /* /background: var(--brand-indigo); */
   min-height: calc(100vh - 200px);
 }
 
@@ -576,7 +618,7 @@ body {
 .page-title {
   font-size: 3rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color:white;
   margin-bottom: 1rem;
 }
 
@@ -599,7 +641,7 @@ body {
 
 .search-input:focus {
   box-shadow: none;
-  border-color: var(--primary-blue);
+  border-color: var(--brand-gold);
 }
 
 .sort-controls {
@@ -612,6 +654,25 @@ body {
   font-weight: 500;
   display: flex;
   align-items: center;
+}
+
+/* Make sort buttons match the Web Only button color and hover behavior */
+.sort-btn{
+  color: white;
+  border-color: white;
+  background: transparent;
+  padding: 0.5rem 0.75rem;}
+.web-only-btn {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+  background: transparent;
+  padding: 0.5rem 0.75rem;
+}
+.sort-btn.web-only-btn:hover {
+  background: var(--text-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
 }
 
 .results-info {
@@ -667,7 +728,7 @@ body {
 .about-description {
   font-size: 1.125rem;
   line-height: 1.8;
-  color: var(--text-secondary);
+  color:  #0F172A;
   margin-bottom: 2rem;
 }
 
@@ -678,7 +739,7 @@ body {
 }
 
 .host-info h4 {
-  color: var(--primary-blue);
+  color: var(--brand-gold);
   font-weight: 600;
   margin-bottom: 1rem;
 }
@@ -692,7 +753,7 @@ body {
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
-  color: var(--text-secondary);
+  color:  #0F172A;
 }
 
 .mission-section {
@@ -709,7 +770,7 @@ body {
 .mission-text {
   font-size: 1.125rem;
   line-height: 1.8;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   text-align: center;
   margin-bottom: 3rem;
 }
@@ -727,14 +788,14 @@ body {
 
 .topics-list li {
   padding: 0.5rem 0;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   position: relative;
   padding-left: 1.5rem;
 }
 
 .topics-list li::before {
   content: '✓';
-  color: var(--success-green);
+  color: var(--status-success);
   font-weight: bold;
   position: absolute;
   left: 0;
@@ -758,7 +819,7 @@ body {
 }
 
 .achievement-icon {
-  color: var(--primary-blue);
+  color: var(--brand-gold);
   margin-bottom: 1rem;
 }
 
@@ -769,7 +830,7 @@ body {
 }
 
 .achievement-card p {
-  color: var(--text-secondary);
+  color: var(--text-primary);
   margin: 0;
 }
 
@@ -789,7 +850,7 @@ body {
 }
 
 .award-icon {
-  color: var(--accent-orange);
+  color: var(--cta-orange);
   margin-bottom: 1rem;
 }
 
@@ -831,6 +892,11 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .navbar-toggler {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
   .hero-title {
     font-size: 2.5rem;
   }
@@ -876,13 +942,7 @@ body {
 }
 
 @media (max-width: 576px) {
-  .hero-stats {
-    position: static;
-    transform: none;
-    margin-top: 2rem;
-    flex-direction: column;
-    gap: 1rem;
-  }
+
   
   .episode-meta {
     flex-direction: column;
@@ -910,12 +970,12 @@ body {
 
 /* Focus States */
 button:focus, .btn:focus {
-  outline: 2px solid var(--primary-blue);
+  outline: 2px solid var(--brand-gold);
   outline-offset: 2px;
 }
 
 input:focus {
-  outline: 2px solid var(--primary-blue);
+  outline: 2px solid var(--brand-gold);
   outline-offset: 2px;
 }
 
@@ -926,4 +986,15 @@ input:focus {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Homepage Font Overrides */
+.homepage .hero-title,
+.homepage .section-title {
+  font-family: var(--font-heading);
+}
+
+.homepage .hero-description,
+.homepage .section-subtitle {
+  font-family: var(--font-body);
 }

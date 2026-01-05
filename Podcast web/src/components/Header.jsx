@@ -18,7 +18,13 @@ const Header = () => {
               Home
             </Nav.Link>
             <Nav.Link as={Link} to="/episodes" className="nav-link-custom">
-              Episodes
+              Web Only Episodes
+            </Nav.Link>
+            <Nav.Link as={Link} to="/spotify-fire" className="nav-link-custom">
+              Spotify Fire
+            </Nav.Link>
+            <Nav.Link as={Link} to="/thoughts" className="nav-link-custom">
+              Thoughts
             </Nav.Link>
             <Nav.Link as={Link} to="/about" className="nav-link-custom">
               About

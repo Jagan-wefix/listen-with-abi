@@ -2,19 +2,24 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 
-const AudioPlayer = ({ 
-  audioRef, 
-  isPlaying, 
-  currentTime, 
-  duration, 
-  volume, 
-  loading, 
-  currentEpisode, 
-  play, 
-  pause, 
-  seek, 
-  setVolumeLevel, 
-  formatTime 
+const AudioPlayer = ({
+  audioRef,
+  isPlaying,
+  currentTime,
+  duration,
+  volume,
+  loading,
+  currentEpisode,
+  play,
+  pause,
+  seek,
+  setVolumeLevel,
+  formatTime,
+  showCommentBoxes,
+  setShowCommentBoxes,
+  interactions,
+  toggleLike,
+  addComment
 }) => {
   if (!currentEpisode) return null;
 
@@ -35,7 +40,23 @@ const AudioPlayer = ({
     setVolumeLevel(volume === 0 ? 1 : 0);
   };
 
+  const CommentForm = ({ episodeId, onAdd }) => {
+    const [text, setText] = React.useState('')
+    return (
+      <div className="d-flex gap-2">
+        <input className="form-control form-control-sm" value={text} onChange={(e) => setText(e.target.value)} placeholder="Write a comment..." />
+        <button className="btn btn-brand btn-sm" onClick={() => { onAdd(text); setText('') }}>Add</button>
+      </div>
+    )
+  }
+
+
+
+
+
   const progressPercentage = duration ? (currentTime / duration) * 100 : 0;
+
+
 
   return (
     <>
@@ -51,12 +72,12 @@ const AudioPlayer = ({
               />
               <div className="episode-details">
                 <h6 className="episode-title">{currentEpisode.title}</h6>
-                <p className="episode-meta">TechTalk Podcast</p>
+                <p className="episode-meta">Listen with Abi</p>
               </div>
             </div>
 
             <div className="player-controls">
-              <button 
+              <button
                 className="play-pause-btn"
                 onClick={isPlaying ? pause : () => play(currentEpisode)}
                 disabled={loading}
@@ -91,16 +112,12 @@ const AudioPlayer = ({
               <button className="volume-btn" onClick={toggleMute}>
                 {volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
               </button>
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.1"
-                value={volume}
-                onChange={handleVolumeChange}
-                className="volume-slider"
-              />
+
             </div>
+
+
+
+
           </div>
         </Card>
       </div>
