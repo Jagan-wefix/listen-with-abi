@@ -4,9 +4,9 @@ export const podcastLogo = "https://res.cloudinary.com/dkyvctkhf/image/upload/v1
 export const podcastInfo = {
   title: "Listen with Abi Podcast",
   description: "Let's talk about the Real stuff",
-  host: "ABI",
+  host: "Abi Devpriya",
   email: "adidevpriya@gmail.com",
-  instaID: "https://www.instagram.com",
+  instaID: "https://www.instagram.com/listen_with_abi_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
   cover: cover,
   thumbnail: cover,
 };

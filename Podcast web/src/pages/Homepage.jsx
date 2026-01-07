@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { Play, Pause, Download, Users, Star, TrendingUp } from 'lucide-react';
+import { Play, Pause, Download, Users, Star, TrendingUp, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { podcastInfo, fetchEpisodes } from '../data/podcastData';
+import { fetchLatestThought } from '../data/firestoreService';
 import EpisodeCard from '../components/EpisodeCard';
 import SpotifyEpisodes from '../components/SpotifyEpisodes';
 
@@ -16,6 +17,7 @@ const Homepage = ({ audioPlayer }) => {
   const latestEpisodes = episodes.slice(0, 3);
   // We'll fetch Spotify latest for playing directly from homepage
   const [spotifyLatest, setSpotifyLatest] = useState([]);
+  const [latestThought, setLatestThought] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -41,6 +43,16 @@ const Homepage = ({ audioPlayer }) => {
         if (mounted) setSpotifyLatest(s || []);
       } catch (err) {
         console.warn('Failed to load spotify latest', err);
+      }
+    })();
+
+    // fetch latest thought (single recent item)
+    (async () => {
+      try {
+        const t = await fetchLatestThought();
+        if (mounted) setLatestThought(t);
+      } catch (err) {
+        console.warn('Failed to load latest thought', err);
       }
     })();
 
@@ -121,6 +133,7 @@ const Homepage = ({ audioPlayer }) => {
                 <div className="hero-actions">
                   <Button 
                     size="lg" 
+                    variant="cta"
                     className="hero-play-btn"
                     onClick={handleHeroPlay}
                     disabled={loadingEpisodes || (loading && currentEpisode?.id === featuredEpisode?.id)}
@@ -134,11 +147,29 @@ const Homepage = ({ audioPlayer }) => {
                     )}
                     {(currentEpisode?.id === featuredEpisode?.id && isPlaying) ? 'Pause Latest' : 'Play Latest Episode'}
                   </Button>
-
                 </div>
-                <div className="hero-actions mt-3">
-                  <Button as={Link} to="/web-only-episodes" variant="outline-accent" className="ms-3 web-only-btn">Web Only Episodes</Button>
-                </div>
+            
+                {latestThought && (
+                  <div className="mt-4">
+                    <Card className="p-3 latest-thought-card">
+                      <div className="d-flex align-items-start gap-3">
+                        <div style={{minWidth: 56}}>
+                          <div className="thought-thumb" style={{width:56,height:56,borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',color:'white',fontWeight:700}}>{(latestThought.title||'T').slice(0,2).toUpperCase()}</div>
+                        </div>
+                        <div className="flex-grow-1">
+                          <h5 className="mb-1">{latestThought.title}</h5>
+                          <div className="text-muted small mb-2">{latestThought.createdAt && latestThought.createdAt.toDate ? latestThought.createdAt.toDate().toLocaleDateString() : ''}</div>
+                          <div className="text-white-75" style={{whiteSpace:'pre-wrap'}}>{(latestThought.content||'').slice(0,160)}{(latestThought.content||'').length>160 ? '…' : ''}</div>
+                          <div className="mt-2">
+                            <Button as={Link} to="/thoughts" className="btn-brand btn-sm d-inline-flex align-items-center" style={{padding: '0.45rem 0.9rem'}}>
+                              See all thoughts <ArrowRight size={14} className="ms-2" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                )}
               </div>
           </Col>
           

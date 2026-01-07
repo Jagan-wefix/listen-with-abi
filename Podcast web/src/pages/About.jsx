@@ -23,9 +23,7 @@ const About = () => {
                 <h3>Meet Your Host</h3>
                 <h4 >{podcastInfo.host}</h4>
                 <p style={{color: 'black'}}>
-                  Abi is a lifelong learner focused on personal growth, resilience, and mindful living.
-                  With experience guiding individuals through habit change, career transitions, and wellbeing practices,
-                  Abi brings warm, actionable conversations that motivate and empower listeners to take the next step.
+                  Hello, I’m Abi. I’m a lifelong learner with a strong interest in personal growth, resilience, and mindful living. My work focuses on supporting individuals through habit development, career transitions, and wellbeing practices by offering practical, thoughtful guidance. I strive to create meaningful conversations that encourage clarity, balance, and steady progress.
                 </p>
                 
                 <div className="contact-info">
@@ -35,7 +33,7 @@ const About = () => {
                   </div>
                   <div className="contact-item">
                     <Instagram size={18} />
-                    <a href={podcastInfo.instaID} target="_blank" rel="noopener noreferrer">{podcastInfo.instaID}</a>
+                    <a href={podcastInfo.instaID} target="_blank" rel="noopener noreferrer">{"listen_with_abi"}</a>
                   </div>
                 </div>
               </div>
@@ -79,7 +77,7 @@ const About = () => {
         </Row>
 
         <footer className="about-footer mt-5 text-center">
-          <Link to="/admin" className="admin-link" style={{color: '#0F172A'}}>Admin</Link>
+          <Link to="/admin-auth" className="admin-link" style={{color: '#0F172A'}}>Admin</Link>
         </footer>
       </Container>
     </div>

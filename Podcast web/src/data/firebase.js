@@ -16,18 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
 
-// Initialize Auth and attempt an anonymous sign-in (helpful when Firestore rules require auth)
+// Initialize Auth
 export const auth = getAuth(app)
-// Only auto sign-in in development to avoid unexpected auth in production
-if (import.meta.env.MODE === 'development') {
-  // Attempt anonymous sign-in; ignore if already signed in or fails
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      signInAnonymously(auth).catch((err) => {
-        console.warn('Anonymous sign-in failed:', err.message || err)
-      })
-    }
-  })
-}
 
 export default app

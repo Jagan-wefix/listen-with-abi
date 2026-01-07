@@ -89,6 +89,26 @@ body {
   animation: float 20s ease-in-out infinite;
 }
 
+.thoughts-page {
+  background: linear-gradient(135deg, #eba74f 0%, var(--brand-gold) 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - 200px);
+  padding: 3rem 0;
+}
+
+.thoughts-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="0.5" cy="0.5" r="0.5"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>');
+  animation: float 20s ease-in-out infinite;
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   33% { transform: translateY(-20px) rotate(120deg); }
@@ -127,7 +147,7 @@ body {
   flex-wrap: wrap;
 }
 
-.hero-play-btn, .hero-subscribe-btn {
+.hero-play-btn {
   padding: 1rem 2rem;
   font-weight: 600;
   border-radius: 12px;
@@ -184,15 +204,9 @@ body {
 }
 .btn-outline-brand:hover { background: var(--brand-gold); color: white; }
 
-.btn-accent {
-  background: var(--text-primary);
-  color: white;
-  border: none;
-  padding: 0.45rem 0.65rem;
-  border-radius: 8px;
-  font-weight: 600;
-}
-.btn-accent:hover { background: #162233; transform: translateY(-2px); }
+.btn-outline-brand { color: #C68642; border-color: #C68642; }
+
+
 
 .btn-outline-accent {
   background: transparent;
@@ -399,6 +413,50 @@ body {
   .episode-description { display: none; }
 }
 
+/* Thoughts / Blog styles */
+.thought-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  color: white;
+}
+
+.thought-card .card-title { color: white; }
+.thought-card .card-subtitle { color: white; }
+.thought-card .card-text { color: white; }
+
+.thought-card .btn {
+  background: transparent;
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.thought-card .btn.active {
+  background: var(--brand-gold);
+  color: white;
+  border-color: var(--brand-gold);
+}
+.thought-card .btn.active svg { color: white; }
+
+.thought-thumb { width:64px; height:64px; border-radius:12px; background: linear-gradient(135deg,var(--brand-gold),var(--brand-indigo)); font-weight:700; }
+.page-title { color: white; font-size: 2.25rem; font-weight: 800; }
+.muted { color: rgba(255,255,255,0.72); }
+.tag-chip { font-size: 0.75rem; margin-right: 0.25rem; }
+
+
+@media (max-width: 576px) {
+  .thought-thumb { width:48px; height:48px; }
+  .page-title { font-size: 1.75rem; }
+}
+
+/* Latest Thought snippet on Homepage */
+.latest-thought-card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.04); }
+.latest-thought-card h5 { margin: 0; }
+.latest-thought-card .text-white-75 { color: rgba(255,255,255,0.85); }
+@media (max-width: 576px) { .latest-thought-card { padding: 0.8rem; } }
+
+.comments-section { background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 8px; }
+.comment-list .small { color: rgba(255,255,255,0.6); }
+#thought-comment-input { min-width: 0; }
+
 /* Spotify Section */
 .spotify-section {
   padding: 4rem 0;
@@ -592,6 +650,43 @@ body {
   border-radius: 4px;
   transition: all 0.3s ease;
 }
+
+/* Interaction controls (like, comment, share) */
+.interaction-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+.interaction-btn, .btn-utility {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: transparent;
+  color:#1E254F;
+  cursor: pointer;
+}
+.interaction-btn:hover, .btn-utility:hover { background: rgba(255,255,255,0.02); }
+.btn-utility.active, .btn-utility.active svg { background: var(--brand-gold); color: white; border-color: var(--brand-gold); }
+.btn-utility.active { color: white; }
+.like-btn.liked { color: var(--brand-gold); }
+
+.comments-panel {
+  margin-left: 1rem;
+  padding: 0.75rem;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  width: 360px;
+}
+.comment-toggle-btn { padding: 0.25rem 0.4rem; }
+
+.comment-list { max-height: 180px; overflow-y: auto; }
+.comment-item { padding: .5rem; background: rgba(0,0,0,0.03); border-radius: 6px; }
+
+
 
 .volume-btn:hover {
   background: rgba(0, 0, 0, 0.05);
@@ -801,69 +896,7 @@ body {
   left: 0;
 }
 
-.achievements-section {
-  padding: 3rem 0;
-}
 
-.achievement-card {
-  border: none;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  height: 100%;
-}
-
-.achievement-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-}
-
-.achievement-icon {
-  color: var(--brand-gold);
-  margin-bottom: 1rem;
-}
-
-.achievement-card h3 {
-  color: var(--text-primary);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.achievement-card p {
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.recognition-section {
-  padding: 3rem 0;
-}
-
-.recognition-card {
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-}
-
-.award-item {
-  padding: 1rem;
-}
-
-.award-icon {
-  color: var(--cta-orange);
-  margin-bottom: 1rem;
-}
-
-.award-item h4 {
-  color: var(--text-primary);
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.award-item p {
-  color: var(--text-secondary);
-  margin: 0;
-}
 
 /* Loading Animations */
 .loading-spinner, .loading-spinner-overlay, .loading-spinner-small {

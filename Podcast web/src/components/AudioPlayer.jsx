@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { Play, Pause, Heart, MessageCircle, Share2, ChevronsUp } from 'lucide-react';
 
 const AudioPlayer = ({
   audioRef,
@@ -32,15 +32,29 @@ const AudioPlayer = ({
     seek(newTime);
   };
 
-  const handleVolumeChange = (e) => {
-    setVolumeLevel(parseFloat(e.target.value));
+  const handleShare = async () => {
+    const url = `${window.location.origin}${window.location.pathname}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: currentEpisode.title, url });
+      } catch (e) {
+        // user cancelled
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        alert('Episode link copied to clipboard');
+      } catch (e) {
+        alert('Unable to copy link');
+      }
+    }
   };
 
-  const toggleMute = () => {
-    setVolumeLevel(volume === 0 ? 1 : 0);
-  };
+  const toggleCommentBox = (episodeId) => {
+    setShowCommentBoxes(prev => ({ ...(prev || {}), [episodeId]: !prev?.[episodeId] }));
+  }
 
-  const CommentForm = ({ episodeId, onAdd }) => {
+  const CommentForm = ({ onAdd }) => {
     const [text, setText] = React.useState('')
     return (
       <div className="d-flex gap-2">
@@ -108,15 +122,46 @@ const AudioPlayer = ({
               </div>
             </div>
 
-            <div className="volume-control">
-              <button className="volume-btn" onClick={toggleMute}>
-                {volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            <div className="interaction-controls">
+              <button className={`interaction-btn like-btn ${interactions[currentEpisode.id]?.liked ? 'liked' : ''}`} onClick={() => toggleLike(currentEpisode.id)} title="Like">
+                <Hear t size={16} /> <span className="ms-1 small">{interactions[currentEpisode.id]?.likes || 0}</span>
               </button>
 
+              <button className="interaction-btn comment-btn" onClick={() => toggleCommentBox(currentEpisode.id)} title="Comments">
+                <MessageCircle size={16} />
+              </button>
+
+              <button className="interaction-btn share-btn" onClick={handleShare} title="Share">
+                <Share2 size={16} />
+              </button>
             </div>
 
+            {/* Comments panel */}
+            {showCommentBoxes?.[currentEpisode.id] && (
+              <div className="comments-panel">
+                <div className="d-flex align-items-center justify-content-between mb-2">
+                  <strong>Comments</strong>
+                  <button className="btn btn-sm btn-outline-utility comment-toggle-btn" onClick={() => toggleCommentBox(currentEpisode.id)} aria-label="Toggle comments">
+                    <ChevronsUp size={14} />
+                  </button>
+                </div>
 
+                <div className="comment-list mb-2">
+                  {(interactions[currentEpisode.id]?.comments || []).length === 0 && (
+                    <div className="text-muted small">No comments yet</div>
+                  )}
+                  {(interactions[currentEpisode.id]?.comments || []).map((c, idx) => (
+                    <div className="comment-item mb-2" key={idx}>
+                      <div className="small text-muted">{new Date(c.createdAt).toLocaleString()}</div>
+                      <div>{c.text}</div>
+                    </div>
+                  ))}
+                </div>
 
+                <CommentForm onAdd={(text) => addComment(currentEpisode.id, text)} />
+              </div>
+            )}
+            )
 
           </div>
         </Card>

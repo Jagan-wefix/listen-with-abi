@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { collection, addDoc, serverTimestamp, getDocs, deleteDoc, doc, query, orderBy } from 'firebase/firestore'
 import { db } from '../data/firebase'
 import { uploadToCloudinary } from '../data/cloudinary'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../data/firebase'
+import { Navigate } from 'react-router-dom'
 
 export default function AdminUpload() {
+  const [user, setUser] = useState(null)
+  const [loadingAuth, setLoadingAuth] = useState(true)
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (u) => {
+      setUser(u)
+      setLoadingAuth(false)
+    })
+    return unsub
+  }, [])
+
   const [title, setTitle] = React.useState('')
   const [description, setDescription] = React.useState('')
   const [episodeNo, setEpisodeNo] = React.useState('')
@@ -26,6 +40,11 @@ export default function AdminUpload() {
   const [interactions, setInteractions] = React.useState(() => {
     try { const raw = localStorage.getItem(storageKey); return raw ? JSON.parse(raw) : {}; } catch (e) { return {} }
   })
+
+  // while auth is initializing, don't render anything
+  if (loadingAuth) return null
+  // if not signed in, redirect to the admin auth page
+  if (!user) return <Navigate to="/admin-auth" replace />
 
   async function handleSubmit(e) {
     e.preventDefault()

@@ -1,0 +1,7 @@
+HOMEPAGE 152    <div className="hero-actions mt-3">
+                  <Button as={Link} to="/web-only-episodes" variant="outline-accent" className="ms-3 web-only-btn">Web Only Episodes</Button>
+                </div>
+
+HEADER- <Nav.Link as={Link} to="/episodes" className="nav-link-custom">
+              Web Only Episodes
+            </Nav.Link>

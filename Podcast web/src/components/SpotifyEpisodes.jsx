@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { collection, query, orderBy, getDocs } from 'firebase/firestore'
 import { db } from '../data/firebase'
 import { Row, Col } from 'react-bootstrap'
+import { ArrowRight } from 'lucide-react'
 import EpisodeCard from './EpisodeCard'
 import { podcastInfo } from '../data/podcastData'
 
@@ -212,11 +213,14 @@ export default function SpotifyEpisodes({ rssUrl = 'https://anchor.fm/s/133292dc
         <h2 className="mb-0 text-white">Latest</h2>
         {episodes.length > latestCount && (
           allLink ? (
-            <Link to={allLink} className="btn p-0" style={{backgroundColor: '#0F172A', color: 'white'}}>Show all {episodes.length}</Link>
+            <Link to={allLink} className="btn-brand btn-sm d-inline-flex align-items-center" style={{padding: '0.4rem 0.9rem'}}>
+              Show all {episodes.length} <ArrowRight size={14} className="ms-2" />
+            </Link>
           ) : (
             <button
-              className="btn btn-link p-0"
+              className="btn-outline-brand btn-sm d-inline-flex align-items-center"
               onClick={() => setShowAll((s) => !s)}
+              style={{padding: '0.35rem 0.6rem'}}
             >
               {showAll ? `Show less` : `Show all ${episodes.length}`}
             </button>

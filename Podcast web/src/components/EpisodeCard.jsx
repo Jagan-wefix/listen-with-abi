@@ -18,6 +18,8 @@ const EpisodeCard = ({ episode, isPlaying, currentEpisode, onPlay, loading, isAc
               src={thumb}
               alt={episode.title}
               className="card-img-top"
+              loading="lazy"
+              decoding="async"
             />
           );
         })()}
